@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposal Penamaan Platform MAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #171717;
+  --bg-deep: #0f0f0f;
+  --surface: rgba(30, 30, 30, 0.86);
+  --surface-2: #1f1f1f;
+  --surface-3: #242424;
+  --border: #2e2e2e;
+  --border-strong: #393939;
+  --text: #fafafa;
+  --text-2: #b4b4b4;
+  --text-3: #898989;
+  --green: #3ecf8e;
+  --green-link: #00c573;
+  --green-border: rgba(62, 207, 142, 0.3);
+  --accent-atlas: #3ecf8e;
+  --accent-tempo: #f5b657;
+  --accent-lumen: #e9d66b;
+  --accent-relay: #79b8ff;
+  --accent-axis: #c9cbc1;
+  --accent-summit: #b794f6;
+  --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "Source Code Pro", "SFMono-Regular", Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  min-height: 100vh;
+  font-family: var(--font);
+  color: var(--text);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(62, 207, 142, 0.12), transparent 30rem),
+    radial-gradient(circle at 88% 12%, rgba(121, 184, 255, 0.08), transparent 26rem),
+    linear-gradient(180deg, #171717 0%, #111 52%, #171717 100%);
+  letter-spacing: 0;
+}
+a { color: inherit; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  width: 100%;
+  height: 2px;
+  background: transparent;
+}
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--green);
+}
+
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 64px;
+  padding: 12px clamp(20px, 5vw, 80px);
+  border-bottom: 1px solid var(--border);
+  background: rgba(15, 15, 15, 0.82);
+  backdrop-filter: blur(18px);
+}
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: max-content;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+.brand-mark::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--green), #1b9b6f);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  padding: 8px 11px;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.nav-links a:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: rgba(255,255,255,.03);
+}
+.nav-cta {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border: 1px solid var(--green-border);
+  border-radius: 9999px;
+  color: var(--text);
+  background: rgba(62, 207, 142, 0.08);
+  white-space: nowrap;
+}
+
+
+.pc-spelling-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.pc-spelling-row .pc-spelling {
+  margin-bottom: 0;
+}
+.name-voice-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 9999px;
+  background: rgba(15, 15, 15, 0.56);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.name-voice-btn:hover {
+  border-color: var(--card-accent);
+  color: var(--card-accent);
+}
+.name-voice-btn:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+.name-voice-btn.is-speaking {
+  border-color: var(--card-accent);
+  color: var(--card-accent);
+  background: rgba(255,255,255,.05);
+}
+.voice-status-live {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+.cover {
+  min-height: calc(100vh - 64px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(28px, 6vw, 80px);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black, transparent 76%);
+  pointer-events: none;
+}
+.cover-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.cover-rule-top, .cover-bottom {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.cover-eyebrow, .cover-year, .cover-label, .pc-number, .pc-spelling, .pc-platform-label, .intro-kicker, .criteria-num, .kw, .ov-note, .ov-cell-num, .ov-cell-spell, .ov-cell-platform strong, .cl-item-num, .footer-l, .footer-name, .scroll-hint {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+.cover-eyebrow { font-size: 12px; color: var(--text-3); }
+.cover-year { margin-left: auto; font-size: 12px; color: var(--text-3); }
+.cover-center {
+  position: relative;
+  display: grid;
+  align-content: center;
+  max-width: 980px;
+  padding: clamp(56px, 10vw, 120px) 0;
+}
+.cover-label {
+  width: fit-content;
+  margin-bottom: 22px;
+  padding: 7px 12px;
+  border: 1px solid var(--green-border);
+  border-radius: 9999px;
+  color: var(--green);
+  background: rgba(62,207,142,.07);
+  font-size: 12px;
+}
+.cover-title {
+  max-width: 920px;
+  margin-bottom: 26px;
+  font-size: clamp(56px, 9vw, 112px);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text);
+}
+.cover-title em { font-style: normal; color: var(--green); }
+.cover-desc {
+  max-width: 610px;
+  color: var(--text-2);
+  font-size: 17px;
+  line-height: 1.6;
+}
+.cover-platforms { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 36px; }
+.cover-chip, .kw {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  color: var(--text-2);
+  background: rgba(255,255,255,.03);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 1.2px;
+}
+.cover-bottom { justify-content: space-between; color: var(--text-3); }
+.cover-bottom-l { font-size: 12px; color: var(--text-3); }
+.cover-bottom-r { display: none; }
+.scroll-hint { font-size: 11px; color: var(--text-3); animation: fadeUpDown 2s ease-in-out infinite; }
+@keyframes fadeUpDown { 0%,100%{transform:translateY(0);opacity:.5} 50%{transform:translateY(4px);opacity:1} }
+
+.intro, .closing {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(32px, 6vw, 80px);
+  padding: clamp(56px, 8vw, 96px) clamp(20px, 6vw, 80px);
+  border-bottom: 1px solid var(--border);
+  background: rgba(15,15,15,.68);
+}
+.intro-kicker {
+  width: fit-content;
+  margin-bottom: 18px;
+  color: var(--green);
+  font-size: 12px;
+}
+.intro-heading, .ov-title, .cl-left {
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--text);
+}
+.intro-heading em, .ov-title em, .cl-left em { font-style: normal; color: var(--text-3); }
+.intro-body, .pc-desc, .criteria-text, .cl-item-text {
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.intro-philosophy {
+  padding: 22px 24px;
+  margin-bottom: 18px;
+  border: 1px solid var(--green-border);
+  border-radius: 16px;
+  background: rgba(62,207,142,.055);
+}
+.intro-philosophy p {
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1.5;
+}
+.intro-criteria { display: grid; gap: 10px; }
+.criteria-item, .cl-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.criteria-num, .cl-item-num { flex: 0 0 auto; color: var(--green); font-size: 12px; }
+.criteria-text strong, .cl-item-text strong { color: var(--text); font-weight: 500; }
+
+.platforms { padding: 0; }
+.platform-card {
+  display: grid;
+  grid-template-columns: minmax(320px, .95fr) minmax(0, 1.05fr);
+  min-height: 460px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  overflow: hidden;
+}
+.platform-card:nth-child(even) { direction: rtl; }
+.platform-card:nth-child(even) > * { direction: ltr; }
+.pc-visual {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 420px;
+  padding: clamp(28px, 5vw, 56px);
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+}
+.platform-card:nth-child(even) .pc-visual { border-right: 0; border-left: 1px solid var(--border); }
+.pc-bg { position: absolute; inset: 0; background: #101010; }
+.pc-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+.pc-content { position: relative; z-index: 2; width: 100%; }
+.pc-number { margin-bottom: 18px; font-size: 12px; color: var(--text-3) !important; }
+.pc-name {
+  margin-bottom: 14px;
+  font-size: clamp(54px, 8vw, 104px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.pc-spelling { margin-bottom: 12px; color: var(--text-3); font-size: 12px; }
+.pc-platform-label {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 7px 11px;
+  border: 1px solid currentColor;
+  border-radius: 9999px;
+  font-size: 11px;
+  line-height: 1.3;
+  opacity: .95;
+}
+.pc-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 5vw, 56px);
+  background: rgba(23,23,23,.9);
+}
+.pc-tagline {
+  margin-bottom: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.24;
+}
+.pc-desc { margin-bottom: 24px; max-width: 720px; }
+.pc-keywords { display: flex; flex-wrap: wrap; gap: 8px; }
+.kw { min-height: 28px; font-size: 11px; color: var(--text-2); }
+.card-atlas { --card-accent: var(--accent-atlas); }
+.card-tempo { --card-accent: var(--accent-tempo); }
+.card-lumen { --card-accent: var(--accent-lumen); }
+.card-relay { --card-accent: var(--accent-relay); }
+.card-axis { --card-accent: var(--accent-axis); }
+.card-summit { --card-accent: var(--accent-summit); }
+.card-atlas .pc-bg { background: radial-gradient(circle at 20% 20%, rgba(62,207,142,.22), transparent 28rem), #101815; }
+.card-tempo .pc-bg { background: radial-gradient(circle at 20% 20%, rgba(245,182,87,.18), transparent 28rem), #18130f; }
+.card-lumen .pc-bg { background: radial-gradient(circle at 20% 20%, rgba(233,214,107,.18), transparent 28rem), #17160f; }
+.card-relay .pc-bg { background: radial-gradient(circle at 20% 20%, rgba(121,184,255,.18), transparent 28rem), #10141b; }
+.card-axis .pc-bg { background: radial-gradient(circle at 20% 20%, rgba(201,203,193,.12), transparent 28rem), #151515; }
+.card-summit .pc-bg { background: radial-gradient(circle at 20% 20%, rgba(183,148,246,.18), transparent 28rem), #15111c; }
+.pc-name, .pc-platform-label { color: var(--card-accent) !important; }
+.card-atlas .pc-visual::after, .card-tempo .pc-visual::after, .card-lumen .pc-visual::after, .card-relay .pc-visual::after, .card-axis .pc-visual::after, .card-summit .pc-visual::after {
+  position: absolute;
+  right: -16px;
+  top: 22px;
+  font-size: clamp(84px, 12vw, 168px);
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(255,255,255,.035);
+  pointer-events: none;
+}
+
+.overview {
+  padding: clamp(56px, 8vw, 96px) clamp(20px, 6vw, 80px);
+  border-bottom: 1px solid var(--border);
+  background: #101010;
+}
+.ov-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 34px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+}
+.ov-note { color: var(--text-3); font-size: 12px; line-height: 1.7; text-align: right; }
+.ov-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--border);
+}
+.ov-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 230px;
+  padding: 24px;
+  background: #171717;
+}
+.ov-cell:hover { background: #1d1d1d; }
+.ov-cell-num { color: var(--text-3); font-size: 11px; }
+.ov-cell-name { font-size: 32px; font-weight: 400; line-height: 1; }
+.ov-cell-spell { color: var(--text-3); font-size: 11px; }
+.ov-cell-platform { color: var(--text-2); font-size: 13px; line-height: 1.45; }
+.ov-cell-platform strong { display: block; margin-bottom: 2px; color: var(--text); font-size: 11px; font-weight: 500; }
+.ov-cell-line { width: 30px; height: 2px; margin: 2px 0; border-radius: 9999px; }
+.ov-cell-tagline { color: var(--text-3); font-size: 13px; line-height: 1.55; }
+.n-atlas { color: var(--accent-atlas); } .l-atlas { background: var(--accent-atlas); }
+.n-tempo { color: var(--accent-tempo); } .l-tempo { background: var(--accent-tempo); }
+.n-lumen { color: var(--accent-lumen); } .l-lumen { background: var(--accent-lumen); }
+.n-relay { color: var(--accent-relay); } .l-relay { background: var(--accent-relay); }
+.n-axis { color: var(--accent-axis); } .l-axis { background: var(--accent-axis); }
+.n-summit { color: var(--accent-summit); } .l-summit { background: var(--accent-summit); }
+
+.closing { align-items: start; background: rgba(15,15,15,.78); }
+.cl-right { display: grid; gap: 10px; }
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px clamp(20px, 6vw, 80px);
+  background: #0f0f0f;
+  color: var(--text-3);
+}
+.footer-l, .footer-name { font-size: 11px; }
+.footer-names { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-end; }
+.footer-name { color: var(--text-3); }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.cover-label, .cover-title, .cover-desc, .cover-platforms { animation: fadeUp .75s ease both; }
+.cover-label { animation-delay: .05s; } .cover-title { animation-delay: .14s; } .cover-desc { animation-delay: .22s; } .cover-platforms { animation-delay: .3s; }
+
+@media (max-width: 900px) {
+  .top-nav { align-items: flex-start; flex-wrap: wrap; gap: 10px; }
+  .nav-links { order: 3; width: 100%; margin-left: 0; }
+  .nav-cta { margin-left: auto; }
+  .intro, .closing, .platform-card { grid-template-columns: 1fr; }
+  .platform-card:nth-child(even) { direction: ltr; }
+  .pc-visual, .platform-card:nth-child(even) .pc-visual { border-left: 0; border-right: 0; border-bottom: 1px solid var(--border); }
+  .ov-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .cover { min-height: auto; }
+  .cover-rule-top, .cover-bottom, .ov-header, .footer { align-items: flex-start; flex-direction: column; }
+  .cover-year { margin-left: 0; }
+  .cover-title { font-size: clamp(44px, 17vw, 64px); }
+  .cover-desc { font-size: 15px; }
+  .pc-visual { min-height: 340px; }
+  .pc-name { font-size: clamp(48px, 17vw, 72px); }
+  .pc-tagline { font-size: 24px; }
+  .ov-grid { grid-template-columns: 1fr; }
+  .ov-note { text-align: left; }
+  .nav-cta { width: 100%; text-align: center; }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="voice-status-live" id="voiceStatus" aria-live="polite"></div>
+<nav class="top-nav" aria-label="Bagian proposal">
+  <a class="brand-mark" href="#top">Penamaan MAI</a>
+  <div class="nav-links">
+    <a href="#philosophy">Filosofi</a>
+    <a href="#atlas">Atlas</a>
+    <a href="#tempo">Tempo</a>
+    <a href="#lumen">Lumen</a>
+    <a href="#relay">Relay</a>
+    <a href="#axis">Axis</a>
+    <a href="#summit">Summit</a>
+    <a href="#overview">Ringkasan</a>
+  </div>
+  <a class="nav-cta" href="#next">Langkah berikutnya</a>
+</nav>
+
+
+<!-- ══ COVER ══ -->
+<section class="cover" id="top">
+  <div class="cover-grain"></div>
+  <div class="cover-rule-top">
+    <span class="cover-eyebrow">Maxxi Agri Indonesia · MAI Stream · Design Ops</span>
+    <span class="cover-year">2026</span>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-label">Proposal Penamaan Platform</div>
+    <h1 class="cover-title">Enam Nama.<br><em>Enam Platform.</em><br>Satu Sistem.</h1>
+    <p class="cover-desc">Kerangka penamaan untuk ekosistem UI Kit MAI — setiap nama dipilih untuk mencerminkan karakter, fungsi, dan peran platformnya.</p>
+    <div class="cover-platforms">
+      <span class="cover-chip">ATLAS</span>
+      <span class="cover-chip">TEMPO</span>
+      <span class="cover-chip">LUMEN</span>
+      <span class="cover-chip">RELAY</span>
+      <span class="cover-chip">AXIS</span>
+      <span class="cover-chip">SUMMIT</span>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-bottom-l">Disiapkan oleh Rakha · Design Ops · MAI Stream</div>
+    <div class="scroll-hint">↓ &nbsp; gulir untuk membaca</div>
+  </div>
+</section>
+
+<!-- ══ INTRO ══ -->
+<section class="intro" id="philosophy">
+  <div class="intro-left">
+    <div class="intro-kicker">Filosofi</div>
+    <h2 class="intro-heading">Nama yang membawa<br><em>makna, bukan sekadar label.</em></h2>
+    <p class="intro-body">Setiap platform dalam ekosistem MAI memiliki fungsi yang berbeda — mulai dari memetakan wilayah sales sampai mendukung persetujuan anggaran di level eksekutif. Sistem penamaan ini memberi setiap UI Kit identitas yang mencerminkan perannya, bukan hanya tempat platform itu digunakan.</p>
+  </div>
+  <div class="intro-right">
+    <div class="intro-philosophy">
+      <p>"Nama yang baik seharusnya terasa tepat sejak awal — seolah platform itu memang tidak mungkin disebut dengan nama lain."</p>
+    </div>
+    <div class="intro-criteria">
+      <div class="criteria-item">
+        <span class="criteria-num">01</span>
+        <div class="criteria-text"><strong>Semantik, bukan literal.</strong> Nama merujuk pada apa yang platform <em>lakukan</em>, bukan hanya apa platform itu <em>secara kategori</em>.</div>
+      </div>
+      <div class="criteria-item">
+        <span class="criteria-num">02</span>
+        <div class="criteria-text"><strong>Mudah diingat dan singkat.</strong> Satu atau dua suku kata. Mudah disebut dalam meeting, mudah ditulis di Figma.</div>
+      </div>
+      <div class="criteria-item">
+        <span class="criteria-num">03</span>
+        <div class="criteria-text"><strong>Ramah lintas bahasa.</strong> Tetap nyaman digunakan dalam konteks bahasa Indonesia maupun Inggris.</div>
+      </div>
+      <div class="criteria-item">
+        <span class="criteria-num">04</span>
+        <div class="criteria-text"><strong>Berbeda satu sama lain.</strong> Setiap nama harus punya karakter yang jelas sehingga tidak terasa berasal dari platform yang sama.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PLATFORM CARDS ══ -->
+
+<!-- 01 ATLAS -->
+<article class="platform-card card-atlas" id="atlas">
+  <div class="pc-visual">
+    <div class="pc-bg"></div>
+    <div class="pc-content">
+      <div class="pc-number" style="color:rgba(180,220,160,.5);">01 / 06</div>
+      <div class="pc-name">ATLAS</div>
+      <div class="pc-spelling-row"><div class="pc-spelling">AT — LAS</div><button class="name-voice-btn" type="button" data-pronunciation="AT LAS" aria-label="Dengarkan pelafalan ATLAS">Voice</button></div>
+      <div class="pc-platform-label">MM+ · Maxxi Marketing Plus</div>
+    </div>
+  </div>
+  <div class="pc-info">
+    <div class="pc-tagline">"Memetakan wilayah, performa,<br>dan peluang dengan jelas."</div>
+    <p class="pc-desc">ATLAS cocok untuk MM+ karena platform ini berperan sebagai alat untuk memetakan wilayah, performa, peluang, dan kondisi bisnis secara lebih jelas. Nama ini memberi kesan gambaran besar, arah, dan cakupan yang luas — sesuai dengan fungsi MM+ yang membantu tim melihat wilayah, pelanggan, dan performa dengan lebih terstruktur.</p>
+    <div class="pc-keywords">
+      <span class="kw">Wilayah</span>
+      <span class="kw">Ringkasan</span>
+      <span class="kw">Performa</span>
+      <span class="kw">Arah</span>
+    </div>
+  </div>
+</article>
+
+<!-- 02 TEMPO -->
+<article class="platform-card card-tempo" id="tempo">
+  <div class="pc-visual">
+    <div class="pc-bg"></div>
+    <div class="pc-content">
+      <div class="pc-number" style="color:rgba(220,160,80,.5);">02 / 06</div>
+      <div class="pc-name">TEMPO</div>
+      <div class="pc-spelling-row"><div class="pc-spelling">TEM — PO</div><button class="name-voice-btn" type="button" data-pronunciation="TEM PO" aria-label="Dengarkan pelafalan TEMPO">Voice</button></div>
+      <div class="pc-platform-label">FS+ · Field Sales Plus</div>
+    </div>
+  </div>
+  <div class="pc-info">
+    <div class="pc-tagline">"Bergerak mengikuti ritme<br>kerja lapangan harian."</div>
+    <p class="pc-desc">TEMPO cocok untuk FS+ karena platform ini dekat dengan ritme kerja lapangan yang berjalan setiap hari. Nama ini merepresentasikan gerak, konsistensi, dan eksekusi harian — sehingga terasa pas untuk platform yang mendukung aktivitas sales lapangan secara aktif dan terus berjalan.</p>
+    <div class="pc-keywords">
+      <span class="kw">Ritme</span>
+      <span class="kw">Gerak Harian</span>
+      <span class="kw">Konsistensi</span>
+      <span class="kw">Lapangan</span>
+    </div>
+  </div>
+</article>
+
+<!-- 03 LUMEN -->
+<article class="platform-card card-lumen" id="lumen">
+  <div class="pc-visual">
+    <div class="pc-bg"></div>
+    <div class="pc-content">
+      <div class="pc-number" style="color:rgba(220,190,80,.5);">03 / 06</div>
+      <div class="pc-name">LUMEN</div>
+      <div class="pc-spelling-row"><div class="pc-spelling">LU — MEN</div><button class="name-voice-btn" type="button" data-pronunciation="LU MEN" aria-label="Dengarkan pelafalan LUMEN">Voice</button></div>
+      <div class="pc-platform-label">Maxxi Rewards · Retailer App</div>
+    </div>
+  </div>
+  <div class="pc-info">
+    <div class="pc-tagline">"Membuat loyalitas terlihat,<br>dan progres terasa bermakna."</div>
+    <p class="pc-desc">LUMEN cocok untuk Maxxi Rewards karena platform ini berhubungan dengan nilai, loyalitas, dan progres yang ingin dibuat lebih terlihat. Nama ini memberi makna terang, visibilitas, dan penegasan atas pencapaian — sehingga pas untuk platform yang menampilkan apresiasi, pertumbuhan, dan hubungan loyalitas.</p>
+    <div class="pc-keywords">
+      <span class="kw">Loyalitas</span>
+      <span class="kw">Visibilitas</span>
+      <span class="kw">Apresiasi</span>
+      <span class="kw">Progres</span>
+    </div>
+  </div>
+</article>
+
+<!-- 04 RELAY -->
+<article class="platform-card card-relay" id="relay">
+  <div class="pc-visual">
+    <div class="pc-bg"></div>
+    <div class="pc-content">
+      <div class="pc-number" style="color:rgba(120,170,220,.5);">04 / 06</div>
+      <div class="pc-name">RELAY</div>
+      <div class="pc-spelling-row"><div class="pc-spelling">RE — LAY</div><button class="name-voice-btn" type="button" data-pronunciation="RE LAY" aria-label="Dengarkan pelafalan RELAY">Voice</button></div>
+      <div class="pc-platform-label">Distributor · Web Platform</div>
+    </div>
+  </div>
+  <div class="pc-info">
+    <div class="pc-tagline">"Menjaga alur transaksi<br>tetap bergerak maju."</div>
+    <p class="pc-desc">RELAY cocok untuk Distributor karena peran utamanya adalah meneruskan alur bisnis dari satu pihak ke pihak lain. Nama ini terasa relevan dengan fungsi distributor sebagai penghubung, penyalur, dan penjaga alur transaksi agar tetap berjalan dengan lancar dan terstruktur.</p>
+    <div class="pc-keywords">
+      <span class="kw">Alur</span>
+      <span class="kw">Koneksi</span>
+      <span class="kw">Transaksi</span>
+      <span class="kw">Serah Terima</span>
+    </div>
+  </div>
+</article>
+
+<!-- 05 AXIS -->
+<article class="platform-card card-axis" id="axis">
+  <div class="pc-visual">
+    <div class="pc-bg"></div>
+    <div class="pc-content">
+      <div class="pc-number" style="color:rgba(200,200,180,.4);">05 / 06</div>
+      <div class="pc-name">AXIS</div>
+      <div class="pc-spelling-row"><div class="pc-spelling">AK — SIS</div><button class="name-voice-btn" type="button" data-pronunciation="AK SIS" aria-label="Dengarkan pelafalan AXIS">Voice</button></div>
+      <div class="pc-platform-label">Back Office · Admin Platform</div>
+    </div>
+  </div>
+  <div class="pc-info">
+    <div class="pc-tagline">"Poros operasional yang<br>menjaga semuanya tetap selaras."</div>
+    <p class="pc-desc">AXIS cocok untuk Back Office karena platform ini menjadi poros operasional yang menjaga banyak proses tetap terarah dan stabil. Nama ini memberi kesan pusat kendali, struktur, dan penopang sistem — sesuai dengan fungsi Back Office yang bekerja di balik layar untuk memastikan operasional tetap berjalan rapi.</p>
+    <div class="pc-keywords">
+      <span class="kw">Kontrol</span>
+      <span class="kw">Struktur</span>
+      <span class="kw">Operasional</span>
+      <span class="kw">Inti</span>
+    </div>
+  </div>
+</article>
+
+<!-- 06 SUMMIT -->
+<article class="platform-card card-summit" id="summit">
+  <div class="pc-visual">
+    <div class="pc-bg"></div>
+    <div class="pc-content">
+      <div class="pc-number" style="color:rgba(180,150,220,.5);">06 / 06</div>
+      <div class="pc-name">SUMMIT</div>
+      <div class="pc-spelling-row"><div class="pc-spelling">SUM — MIT</div><button class="name-voice-btn" type="button" data-pronunciation="SUM MIT" aria-label="Dengarkan pelafalan SUMMIT">Voice</button></div>
+      <div class="pc-platform-label">High-Level · CEO Platform</div>
+    </div>
+  </div>
+  <div class="pc-info">
+    <div class="pc-tagline">"Sudut pandang tertinggi<br>untuk keputusan strategis."</div>
+    <p class="pc-desc">SUMMIT cocok untuk platform high-level karena platform ini berada di level tertinggi untuk melihat gambaran besar, melakukan persetujuan, dan mendukung keputusan strategis. Nama ini memberi kesan puncak, gambaran besar, dan sudut pandang yang lebih tinggi — selaras dengan fungsi platform untuk kebutuhan kepemimpinan.</p>
+    <div class="pc-keywords">
+      <span class="kw">Kepemimpinan</span>
+      <span class="kw">Persetujuan</span>
+      <span class="kw">Strategi</span>
+      <span class="kw">Ringkasan</span>
+    </div>
+  </div>
+</article>
+
+<!-- ══ OVERVIEW TABLE ══ -->
+<section class="overview" id="overview">
+  <div class="ov-header">
+    <h2 class="ov-title">Enam Nama<br><em>dalam satu ringkasan.</em></h2>
+    <div class="ov-note">MAI Stream · Sistem Penamaan UI Kit<br>Diusulkan oleh Design Ops · 2026</div>
+  </div>
+
+  <div class="ov-grid">
+    <div class="ov-cell">
+      <div class="ov-cell-num">01</div>
+      <div class="ov-cell-name n-atlas">ATLAS</div>
+      <div class="ov-cell-spell">AT — LAS</div>
+      <div class="ov-cell-line l-atlas"></div>
+      <div class="ov-cell-platform"><strong>MM+</strong>Maxxi Marketing Plus · Tablet</div>
+      <div class="ov-cell-tagline">"Memetakan wilayah, performa, dan peluang."</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-cell-num">02</div>
+      <div class="ov-cell-name n-tempo">TEMPO</div>
+      <div class="ov-cell-spell">TEM — PO</div>
+      <div class="ov-cell-line l-tempo"></div>
+      <div class="ov-cell-platform"><strong>FS+</strong>Field Sales Plus · Mobile</div>
+      <div class="ov-cell-tagline">"Bergerak mengikuti ritme kerja lapangan harian."</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-cell-num">03</div>
+      <div class="ov-cell-name n-lumen">LUMEN</div>
+      <div class="ov-cell-spell">LU — MEN</div>
+      <div class="ov-cell-line l-lumen"></div>
+      <div class="ov-cell-platform"><strong>Maxxi Rewards</strong>Retailer App · Mobile</div>
+      <div class="ov-cell-tagline">"Membuat loyalitas terlihat, dan progres terasa bermakna."</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-cell-num">04</div>
+      <div class="ov-cell-name n-relay">RELAY</div>
+      <div class="ov-cell-spell">RE — LAY</div>
+      <div class="ov-cell-line l-relay"></div>
+      <div class="ov-cell-platform"><strong>Distributor</strong>Web Platform · Desktop</div>
+      <div class="ov-cell-tagline">"Menjaga alur transaksi tetap bergerak maju."</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-cell-num">05</div>
+      <div class="ov-cell-name n-axis">AXIS</div>
+      <div class="ov-cell-spell">AK — SIS</div>
+      <div class="ov-cell-line l-axis"></div>
+      <div class="ov-cell-platform"><strong>Back Office</strong>Admin Platform · Desktop</div>
+      <div class="ov-cell-tagline">"Poros operasional yang menjaga semuanya tetap selaras."</div>
+    </div>
+    <div class="ov-cell">
+      <div class="ov-cell-num">06</div>
+      <div class="ov-cell-name n-summit">SUMMIT</div>
+      <div class="ov-cell-spell">SUM — MIT</div>
+      <div class="ov-cell-line l-summit"></div>
+      <div class="ov-cell-platform"><strong>High-Level</strong>CEO Platform · Web Responsive</div>
+      <div class="ov-cell-tagline">"Sudut pandang tertinggi untuk keputusan strategis."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CLOSING ══ -->
+<section class="closing" id="next">
+  <div class="cl-left">
+    Apa langkah<br><em>berikutnya setelah<br>penamaan?</em>
+  </div>
+  <div class="cl-right">
+    <div class="cl-item">
+      <span class="cl-item-num">01</span>
+      <div class="cl-item-text"><strong>Dapatkan alignment dari Ce Veve dan tim.</strong> Presentasikan penamaan ini ke tim PD dan konfirmasi nama mana yang paling sesuai sebelum digunakan di Figma.</div>
+    </div>
+    <div class="cl-item">
+      <span class="cl-item-num">02</span>
+      <div class="cl-item-text"><strong>Ubah nama halaman UI Kit di Figma.</strong> Setiap halaman UI Kit platform menggunakan code name sebagai subtitle — contoh: <em>"MM+ · ATLAS"</em>.</div>
+    </div>
+    <div class="cl-item">
+      <span class="cl-item-num">03</span>
+      <div class="cl-item-text"><strong>Gunakan dalam dokumentasi DS.</strong> Gunakan nama ini saat menulis deskripsi komponen — <em>"Komponen ini merupakan bagian dari kit ATLAS."</em></div>
+    </div>
+    <div class="cl-item">
+      <span class="cl-item-num">04</span>
+      <div class="cl-item-text"><strong>Tetap gunakan Magnum sebagai nama layer token.</strong> ATLAS, TEMPO, dan nama lainnya adalah nama UI Kit. Magnum tetap menjadi fondasi token bersama untuk semua platform.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-l">MAI Stream · Design Ops · Proposal Penamaan Platform · 2026</div>
+  <div class="footer-names">
+    <span class="footer-name">ATLAS</span>
+    <span class="footer-name">TEMPO</span>
+    <span class="footer-name">LUMEN</span>
+    <span class="footer-name">RELAY</span>
+    <span class="footer-name">AXIS</span>
+    <span class="footer-name">SUMMIT</span>
+  </div>
+</footer>
+<script>
+  const progressFill = document.getElementById("progressFill");
+  const updateProgress = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? (window.scrollY / max) * 100 : 0;
+    progressFill.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+  };
+  updateProgress();
+  window.addEventListener("scroll", updateProgress, { passive: true });
+
+  const voiceStatus = document.getElementById("voiceStatus");
+  const nameVoiceButtons = document.querySelectorAll(".name-voice-btn");
+  let activeVoiceButton = null;
+
+  const resetVoiceButtons = () => {
+    nameVoiceButtons.forEach((button) => {
+      button.disabled = false;
+      button.classList.remove("is-speaking");
+      button.textContent = "Voice";
+    });
+    activeVoiceButton = null;
+  };
+
+  const speakName = (button) => {
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+      voiceStatus.textContent = "Browser ini belum mendukung text to voice.";
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    resetVoiceButtons();
+
+    const pronunciation = button.dataset.pronunciation || button.textContent.trim();
+    const utterance = new SpeechSynthesisUtterance(pronunciation);
+    utterance.lang = "id-ID";
+    utterance.rate = 0.82;
+    utterance.pitch = 1;
+    utterance.onstart = () => {
+      activeVoiceButton = button;
+      button.disabled = true;
+      button.classList.add("is-speaking");
+      button.textContent = "Playing";
+      voiceStatus.textContent = `Membacakan pelafalan ${pronunciation}.`;
+    };
+    utterance.onend = resetVoiceButtons;
+    utterance.onerror = resetVoiceButtons;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  nameVoiceButtons.forEach((button) => {
+    button.addEventListener("click", () => speakName(button));
+  });
+</script>
+</body>
+</html>
